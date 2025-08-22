@@ -2,7 +2,13 @@
   "name": "nowa-app",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.12.2",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
@@ -10,17 +16,20 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@better-fetch/fetch": "^1.1.18",
+    "@tanstack/react-query": "^5.85.5",
+    "next": "15.5.0",
+    "next-auth": "5.0.0-beta.29",
     "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.5.0"
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@biomejs/biome": "2.2.0",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
     "tailwindcss": "^4",
-    "@biomejs/biome": "2.2.0"
+    "typescript": "^5"
   }
 }

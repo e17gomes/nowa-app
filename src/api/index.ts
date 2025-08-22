@@ -3,23 +3,27 @@
  * Centraliza configuração e interceptadores
  */
 
-import type { ApiResponse, ApiError, RequestConfig } from './types';
-import { authService } from '../auth';
+import { authService } from "../services/auth";
+import type { ApiError, ApiResponse, RequestConfig } from "./types";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
-export const apiService = {
+export const httpClient = {
   baseURL: API_BASE_URL,
 
   /**
    * Realiza requisição HTTP genérica
    */
-  async request<T>(endpoint: string, config: RequestConfig = {}): Promise<ApiResponse<T>> {
+  async request<T>(
+    endpoint: string,
+    config: RequestConfig = {}
+  ): Promise<ApiResponse<T>> {
     const url = `${this.baseURL}${endpoint}`;
     const token = authService.getToken();
 
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...config.headers,
     };
 
@@ -29,7 +33,7 @@ export const apiService = {
 
     try {
       const response = await fetch(url, {
-        method: config.method || 'GET',
+        method: config.method || "GET",
         headers,
         body: config.body ? JSON.stringify(config.body) : undefined,
       });
@@ -44,11 +48,11 @@ export const apiService = {
 
       return await response.json();
     } catch (error) {
-      if (error && typeof error === 'object' && 'status' in error) {
+      if (error && typeof error === "object" && "status" in error) {
         throw error;
       }
       const apiError: ApiError = {
-        message: 'Erro de conexão',
+        message: "Erro de conexão",
         status: 0,
       };
       throw apiError;
@@ -59,29 +63,29 @@ export const apiService = {
    * Requisição GET
    */
   async get<T>(endpoint: string): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: 'GET' });
+    return this.request<T>(endpoint, { method: "GET" });
   },
 
   /**
    * Requisição POST
    */
   async post<T>(endpoint: string, data: unknown): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: 'POST', body: data });
+    return this.request<T>(endpoint, { method: "POST", body: data });
   },
 
   /**
    * Requisição PUT
    */
   async put<T>(endpoint: string, data: unknown): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: 'PUT', body: data });
+    return this.request<T>(endpoint, { method: "PUT", body: data });
   },
 
   /**
    * Requisição DELETE
    */
   async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: 'DELETE' });
+    return this.request<T>(endpoint, { method: "DELETE" });
   },
 };
 
-export * from './types';
+export * from "./types";

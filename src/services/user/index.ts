@@ -3,15 +3,15 @@
  * Gerencia operações relacionadas ao perfil do usuário
  */
 
-import { apiService } from '../api';
-import type { UserProfile, UpdateUserData } from './types';
+import { httpClient } from "../../api";
+import type { UpdateUserData, UserProfile } from "./types";
 
 export const userService = {
   /**
    * Obtém perfil do usuário atual
    */
   async getProfile(): Promise<UserProfile> {
-    const response = await apiService.get<UserProfile>('/user/profile');
+    const response = await httpClient.get<UserProfile>("/user/profile");
     return response.data;
   },
 
@@ -19,7 +19,7 @@ export const userService = {
    * Atualiza perfil do usuário
    */
   async updateProfile(data: UpdateUserData): Promise<UserProfile> {
-    const response = await apiService.put<UserProfile>('/user/profile', data);
+    const response = await httpClient.put<UserProfile>("/user/profile", data);
     return response.data;
   },
 
@@ -27,9 +27,9 @@ export const userService = {
    * Lista todos os usuários (admin only)
    */
   async getUsers(): Promise<UserProfile[]> {
-    const response = await apiService.get<UserProfile[]>('/users');
+    const response = await httpClient.get<UserProfile[]>("/users");
     return response.data;
   },
 };
 
-export * from './types';
+export * from "./types";
