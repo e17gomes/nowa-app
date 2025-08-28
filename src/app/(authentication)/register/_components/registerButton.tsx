@@ -3,8 +3,7 @@
 import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
 
-
-export function LoginButton() {
+export function RegisterButton() {
   const { pending } = useFormStatus();
 
   return (
@@ -13,7 +12,7 @@ export function LoginButton() {
       disabled={pending}
       className="w-full"
     >
-      {pending ? "Entrando..." : "Entrar"}
+      {pending ? "Criando conta..." : "Criar Conta"}
     </Button>
   );
 }
